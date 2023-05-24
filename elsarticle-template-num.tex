@@ -1,0 +1,405 @@
+%% 
+%% Copyright 2007-2020 Elsevier Ltd
+%% 
+%% This file is part of the 'Elsarticle Bundle'.
+%% ---------------------------------------------
+%% 
+%% It may be distributed under the conditions of the LaTeX Project Public
+%% License, either version 1.2 of this license or (at your option) any
+%% later version.  The latest version of this license is in
+%%    http://www.latex-project.org/lppl.txt
+%% and version 1.2 or later is part of all distributions of LaTeX
+%% version 1999/12/01 or later.
+%% 
+%% The list of all files belonging to the 'Elsarticle Bundle' is
+%% given in the file `manifest.txt'.
+%% 
+
+%% Template article for Elsevier's document class `elsarticle'
+%% with numbered style bibliographic references
+%% SP 2008/03/01
+%%
+%% 
+%%
+%% $Id: elsarticle-template-num.tex 190 2020-11-23 11:12:32Z rishi $
+%%
+%%
+\documentclass[preprint,12pt]{elsarticle}
+
+%% Use the option review to obtain double line spacing
+%% \documentclass[authoryear,preprint,review,12pt]{elsarticle}
+
+%% Use the options 1p,twocolumn; 3p; 3p,twocolumn; 5p; or 5p,twocolumn
+%% for a journal layout:
+%% \documentclass[final,1p,times]{elsarticle}
+%% \documentclass[final,1p,times,twocolumn]{elsarticle}
+%% \documentclass[final,3p,times]{elsarticle}
+%% \documentclass[final,3p,times,twocolumn]{elsarticle}
+%% \documentclass[final,5p,times]{elsarticle}
+%% \documentclass[final,5p,times,twocolumn]{elsarticle}
+
+%% For including figures, graphicx.sty has been loaded in
+%% elsarticle.cls. If you prefer to use the old commands
+%% please give \usepackage{epsfig}
+
+%% The amssymb package provides various useful mathematical symbols
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{svg}
+%% The amsthm package provides extended theorem environments
+%% \usepackage{amsthm}
+
+%% The lineno packages adds line numbers. Start line numbering with
+%% \begin{linenumbers}, end it with \end{linenumbers}. Or switch it on
+%% for the whole article with \linenumbers.
+%% \usepackage{lineno}
+
+\journal{Nuclear Physics B}
+
+\begin{document}
+
+\begin{frontmatter}
+
+%% Título antigo
+
+\title{A Distributed MultiAgent System for Optimization\\}
+
+%% Título sugerido
+
+\title{Distributed Multiagent System for the Actor Model of Computation}
+
+
+\author[cefetmg]{Felipe Duarte dos Reis}
+
+\affiliation[cefetmg]{organization={CEFET-MG - Computer Engineering Departament},
+            addressline=Av. Amazonas  7675}, 
+            city={Belo Horizonte},
+            postcode={30510-000}, 
+            state={Minas Gerais},
+            country={Brazil}}
+
+\author[cefetmg]{Rogério Martins Gomes}
+\author[cefetmg]{Henrique Elias Borges}
+
+
+\begin{abstract}
+
+o abstract foi feito por mim, mas não está legal. Tem que melhorar. De qualquer forma representa o que está apresentado no texto. \\
+
+
+This paper presents a distributed multi-agent system based on the computation actor model, designed to solve various optimization problems. The system uses two types of agent, an initializer and a metaheuristic agent, and communication occurs via a conversation protocol. The proposed architecture is distributed, and its scalability is evaluated with an experimental approach. The data obtained show that the latency of the principal message types exchanged between actors tends to diminish under the same configuration.
+
+
+This was compiled through chatGpt
+
+This work describes the results of a scalability experiment conducted on a simulation system using various metaheuristic configurations. The experiment was carried out in four sets of executions with 18 agents and different configurations. The latency for four of the main messages exchanged was recorded and the results were analyzed using statistical methods. The ANOVA and Tukey-HSD tests were applied to the UpdateGlobalSummary message, while the Kruskal-Wallis and Conover-Iman tests were used for the UpdateRegionSummary and RegionSplit messages. The results indicate that the number of nodes in the simulation cluster affects the performance of the system, and some configurations show better performance than others. The experiment's findings could be useful for researchers and practitioners in the field of simulation systems and metaheuristics.
+
+
+esta parte do GPT, por exemplo, não está legal\\
+
+
+The ANOVA and Tukey-HSD tests were applied to the UpdateGlobalSummary message, while the Kruskal-Wallis and Conover-Iman tests were used for the UpdateRegionSummary and RegionSplit messages.
+
+
+\end{abstract}
+
+
+%%Research highlights
+\begin{highlights}
+\item Research highlight 1
+\item Research highlight 2
+\end{highlights}
+
+\begin{keyword}
+%% keywords here, in the form: keyword \sep keyword
+keyword one \sep keyword two
+\end{keyword}
+
+\end{frontmatter}
+
+%% \linenumbers
+
+%% main text
+\section{Introduction}
+
+Metaheuristics are often used to find suitable solutions to tricky optimization issues. In other words, changing the problem or even maintaining the same family of issues, but with a bit of variable variation, can require reshaping the metaheuristic.
+
+In a hybrid strategy, the combination of different or complete algorithms, such as population-based and local search methods, is a practical approach to improving search performance \cite{dokeroglu2019}. However, although the performance of such hybrid algorithms is demonstrably better, this technique does not overcome the same technical disadvantages of problem knowledge and parameters. Quite the opposite, this approach adds more parameters to calibrate.
+
+Research into metaheuristics has grown greatly in the last two decades, leading to thousands of search strategies that make it difficult to manually combine and test their performance on various problems. In addition, hybrid metaheuristics face the theoretical challenges of having a static pattern of interaction and communication, leaving the system unable to adapt to different problems because of the fixed interaction pattern and communication patterns. Therefore, an alternative approach is to use multi-agent systems modeling (MMAS) to promote dynamic hybridization of different search strategies.
+
+An alternative to manually combining two or more search techniques is agent-based modeling, where agents can encapsulate metaheuristics and communicate with each other through message exchange \cite{gong2015, zheng2015}. The latest review of the literature reports 25 software architectures and frameworks that allow the combination of metaheuristics \cite{silva2018}. Of those 25, the ones using agent-based modeling are AgE, CMA, JABAT, MACS, MANGO, and AMAM, each with particular characteristics and different search strategies implemented. 
+
+This paper presents a new optimization architecture called \texttt{d-optimas}, based on the computational actor model \cite{hewitt2013}. Each actor encapsulates a complete agent with a memory component and a metaheuristic capable of communicating with other agents. The search space is organized into regions of interest where agents can collaborate. Metaheuristics are agnostic concerning the implementation of the specific problem, which can be provided at execution time through configuration. The architecture is distributed by design and provides failure tolerance mechanisms such as replication and lead election. 
+
+The next section will discuss recent work on distributed architectures for optimization; a detailed description of \texttt{d-optimas} is provided. Section \ref{sec:experiment} 
+ evaluates the scalability of the new architectures using an experimental approach followed by the conclusions and future work in Section \ref{sec:conclusion}. 
+
+
+
+\section{Related work}
+\label{sec:relatedWork}
+
+\textit{Silva et al.} provide a detailed review of the literature presenting 25 software architectures for optimization \cite{silva2018}. The authors divide them into two categories: optimization frameworks that use metaheuristics and multi-agent frameworks that use metaheuristics. Additionally, subcategories are established between these two main categories: general and advanced characteristics, multi-agent characteristics, and resources to the optimization process.
+
+This paper aims to develop a multi-agent, distributed, actor-based, and scalable software architecture. In this sense, \texttt{d-optimas} should be compared with similar works in the literature. Of the 25 works presented by\textit{ Silva et al.} (2018), those classified as distributed systems in their advanced characteristics and multi-agent systems were selected. Thus, the following subsections present AgE, CMA, JABAT, MACS, and MANGO architectures with their main features. 
+
+% AgE
+AgE (Agent Evolution) is a configurable, component-based platform proposed to solve different optimization problems. The platform uses reusable software components and is based on a mathematical formalism to define an agent-based model \cite{piketak2009functional}. Although various optimization techniques can be used \cite{piketak2013agent}, the only concrete implementation of the framework is based on genetic algorithms and evolutionary multi-agent systems \cite{kisiel2004agent}. Other AgE implementations were found in different languages, but without experimental results or demonstrations of the function or advantages of the model.
+
+% CMA
+The Collaborative Metaheuristic Algorithm (CMA) is a framework for solving combinatorial optimization problems \cite{malek2009},  consisting of four types of agents: Problem agents, solution pool agents, optimizer agents, and consultant agents. The author presents results for some instances of the traveling salesman problem without a detailed statistical analysis \cite{malek2010}. CMA is designed to collaborate effectively with metaheuristics, encapsulating them into optimizer agents to solve optimization problems.
+
+% JABAT
+JABAT is a multi-agent system in which agents collaborate to generate solutions to combinatorial optimization problems. It is based on A-Teams implemented using the JADE library. Proposed by \textit{Jdrzejowicz and Wierzbowska} (2006) and updated by \textit{Barbucha et al.} (2010). It presents two new versions of the architecture: eJABAT, which offers a web interface, and cJABAT, which includes a positive reinforcement learning mechanism \cite{jedrzejowicz2006, barbucha2010}. The architecture solves various problems but is not prepared for solving multiobjective problems.
+
+% MACS
+\textit{Martin et al.} \cite{martin2016} proposed a multi-agent cooperative search (MACS) system to solve routing and flow problems. The system uses two types of agents, an initializer and a metaheuristic agent, and communication occurs via a conversation protocol. The results showed that doubling the number of agents in the system led to a significant improvement in the search results. The system performed as well as those in the literature without parameter tuning, although it only used two heuristics.
+
+% MANGO
+The Multi-Agent Environment for Global Optimization (MANGO) is an architecture based on the JADE platform \cite{kerccelli2008}. Each agent encapsulates a metaheuristic and can communicate with other agents, sharing and requesting solutions or informing about areas of the search space that are suitable for exploration. Communication between agents occurs asynchronously and nondeterministically through message exchange. The architecture implementation is strongly coupled to the optimization problem and only has the Electromagnetism-like Mechanism (EM) heuristic. The author presents only one execution to illustrate the functioning of the architecture without giving a planned experimental procedure.
+
+% AMAM
+Finally, the AMAM framework is a multi-agent system consisting of five types of agents responsible for exploring the search space, coordinating communication, and analyzing solutions \cite{silva2007}. The original version of AMAM was later extended with shared adaptive memory, which allows agents to communicate through a shared memory area containing the best solutions found at a given time. The latest version of AMAM abandons the concept of a coordinating agent and instead incorporates a reinforcement learning memory in each agent \cite{fernandes2009}. Results indicate that even with only four cooperating agents, there is a significant difference in the architecture's performance compared to non-cooperating agents. This latest version of AMAM aligns with best practices for modeling multi-agent systems, emphasizing the importance of agent independence \cite{silva2015}.
+
+% LBMAS
+
+\section{The d-optimas architecture}
+\label{sec:architecture}
+% - general architecture view
+The \texttt{d-optimas} architecture is composed of three types of different actors: the \textbf{SimulationActor}, the \textbf{RegionActor}, and the \textbf{AgentActor}. A schematic diagram is shown in Figure \ref{fig:d-optimas-new}. The first is responsible for managing the simulation cluster. It is present in all running nodes, and one of the instances is elected to be the simulation leader, responsible for starting up, monitoring, routing messages, and stopping the simulation according to the stop criteria. If a leader becomes unreachable by other nodes, an election is run and one of the \textbf{SimulationActors} is promoted to leader. 
+
+\begin{figure}
+    \centering
+    \includesvg[scale=0.4]{figures/d-optimas-new.svg}
+    \caption{Block diagram of \texttt{d-optimas} architecture. There are three computer nodes represented in the figure. The solid-line connections represent direct communication in the same machine. The dashed lines represent the communication through the network using message passing.  Each compute node has one simulation manager, an actor responsible for routing, creating shard actors, and starting and stopping the simulation in each node. One of the simulation managers is elected as the leader, responsible for managing the simulation. If a node fails, all actors are redistributed in the other nodes, and a new leader is elected.}
+    \label{fig:d-optimas-new}
+\end{figure}
+
+%- simulation management
+The \textbf{AgentActor} encapsulates all components of the agent, which comprise the memory module, the metaheuristic, and the action selection mechanism. The agent is responsible for creating new solutions or refining existing ones depending on the type of agent and sends the resulting solutions to \textbf{SimulationActor}, which will assign them to an appropriate region. For refining solutions, an agent has to broadcast or ask for a specific region for a set of solutions. That said, agents do not communicate with each other directly. This communication is possible only through the regions. 
+
+A \textbf{RegionActor} has a set of solutions. The regions are self-organized and communicate with each other directly or through broadcast. They can be combined and divided depending on the internal and global state of the simulation. 
+
+ \textbf{RegionShard} and \textbf{AgentShard} are high-level abstractions provided by the \textit{Akka} toolkit for load balancing. They also enable direct communication between actors through labels instead of the fully qualified domain name. The shards provide a replication mechanism based on a no-SQL database. Whenever a node fails or becomes unreachable, it is possible to restore its agents and regions to another node. 
+
+%- the agent structure: metaheuristic, memory, and communication
+The agent comprises three main components: the metaheuristic algorithm, the action selection mechanism, and the unity of memory. 
+
+%- different kinds of agents: builders, refiners, and population-based agents
+
+The algorithm running inside the agent differentiates into three categories, namely builders, refiners, and population-based agents. Builder agents construct a solution element by element using a heuristic function such as a greedy heuristic. There is also a random heuristic and a GRASP\cite{resende2016grasp} implementation, which combines cheap and random procedures with a local search. Builder agents do not ask for solutions from regions as they do not need any input to produce an output. In contrast, refiners ask regions for new solutions and apply a local search to create a new optimized solution. Local search implementations available are Random and Greedy Heuristics, ILS\cite{lourencco2003ils}, VNS\cite{mladenovic1997vns}, and Simulated Annealing\cite{van1987sa}. Finally, population-based agents receive a set of solutions from regions and process this set to produce an optimized solution, which is the best solution for the last population. The available implementations are Genetic Algorithm, PSO\cite{marini2015pso}, and Differential Evolution\cite{price2013de}. 
+
+%- the basics structures: problem, solution, modifier 
+The primary data structures used in the simulation by regions and agents are \textbf{Problem}, \textbf{Solution}, and \textbf{Modifier}. A \textbf{Problem} is an abstract class that provides an interface for loading the problem data, the domain dimension, and the number of objectives. For now, we have the binary partition, the vehicle routing with a time window, the 0-1 knapsack, and a real function problem. All of them are single-objective problems. Multiobjective problems and algorithms will be provided in a future version of the architecture. The \texttt{Solution<D, I, P>} is an abstract class that is composed of a domain D (a numeric type) and an image I (a numeric and comparable type) related to problem P. A solution keeps the decision variables, calculates, and stores the objective function, and checks the viability of a solution. A hash id identifies unique solutions and is immutable, that is, any change to a particular optimization variable will produce a new solution.  
+
+%- algorithm generalization
+Optimization algorithms extend from an abstract class that contains a map with parameter names and values. Parameters are usually the learning, mutation, or crossover rates, the size of the population, or the number of runs, depending on the implementation. In this way, they are easily injected from the configuration at execution time. 
+The algorithm deals with abstract problems \texttt{Solution<D, I, P>}, excluding the need to provide an implementation for each new type of problem. For operations that depend on the problem domain, they use modifiers. A \texttt{Modifier<D, S>} acts on a set of solutions of type S and domain D, producing a new set of solutions. 
+
+Modifiers are implemented for a specific type of solution and can be reused by algorithms. For example, a genetic algorithm has a selection, crossover, and mutation step. The selection step is abstracted in a Modifier that receives the population and returns a pair of solutions to the crossover phase. This selection depends only on the fitness function, which allows us to provide a more generic implementation such as \texttt{BinaryCrossover<D, S>} that can work for any problem. But crossover solutions for a vehicle routing problem differ from a real function problem.  For that, two crossovers are implemented as \texttt{RealFunctionCrossover<Double, FunctionSolution>} and \texttt{RoutingGraphCrossover<Double, VehicleRoutingSolution>}.
+
+%- memory system and action selection 
+During simulation, the agents explore the search space and produce new solutions from scratch or gather the environment for the existing solutions to optimize. The memory and action-selection mechanisms work together to store the best-found solution during the simulation, keeping track of known regions, exploring the new regions as they are created, and finally selecting one region for asking for solutions. The memory unit is based on a Q-learning algorithm \cite{hasselt2010qlearning}.
+
+When an agent starts working, unless it is a builder, it has to decide if it is going to explore the search space, send a broadcast to all regions asking for solutions, or if it is going to select a particular region to explore. If the agent's memory is empty, it means that it does not know any region yet. So the default decision is to broadcast. 
+
+After receiving the response from the region, the optimization algorithm will apply to the received solutions, producing a new solution. The agent will calculate the difference between the best-found solution and the current one. If this region gives a set of solutions that improves the best-known solution, its quality will increase. Otherwise, it will decrease the rate in that region. The reward value $R(f_c)$ is given by Equation \ref{eq:reward} where $f_b$ is the objective function value of the best-known solution, $f_c$ is the current objective function value. This reward value is within the interval $[-1, 1]$
+
+\begin{equation}
+\label{eq:reward}
+    R(f_c) = -1 + \frac{2}{1 + e^{f_c - f_b}}
+\end{equation}
+
+Given that the number of regions changes over time and the agent has limited memory space to store regions, the Q learning table is periodically updated to remove bad quality regions and add new unknown regions with a quality equal to $0.5$. Unknown regions are received by piggybacking on the \textbf{UpdateGlobalSummary} message. This ensures that, even though the agent configures a low exploratory coefficient, it will not keep the deficient regions in memory.
+
+%- region: formation, split, and merge
+The simulation has a minimum and maximum limit of regions. At the beginning, for each new solution that \textbf{SimulationActor} receives from an agent, \textbf{ SimulationActor } creates a new region. After reaching the minimum number of regions, the new solutions are distributed to existing regions by weighted roulette, with the region's variance coefficient as weight. As the regions grow and reach a minimum number of solutions, they can be split if their variance coefficient exceeds the global coefficient. If a region decides to split, three new regions will be created, with the solutions in which the objective function will be lesser than $f_o(x) < \overline{f_o} - s_{f_o}$, the regions between $\overline{f_o} - s_{f_o} < f_o(x) < \overline{f_o} + s_{f_o}$  and the solutions with the objective function $f_o(x) > \overline{f_o} + s_{f_o}$.
+
+Regions may also request a merge with other regions if the solutions set together produce a lower variation ratio for the requested region. For that, a region periodically broadcasts to other regions asking for a merge. If the request fits the criteria for any of the existing regions they will answer with a merge accept the response. The first region that responds positively will receive a merge acceptance response, and the requester region will destroy itself. 
+
+\section{Experimental results on scalability}
+\label{sec:experiment}
+This experiment evaluated the latency of messages exchanged between agents, regions, and the simulation manager. The factor assessed during the experiment was the number of machines in the cluster, keeping all other parameters the same between executions. In other words, this experiment aims to answer the following question. Does the performance degrade if we add more resources to the simulation?
+
+The experiment was divided into four sets of execution, the first in a 3-server cluster and the last in a 6-server cluster. Each set of experiments was run 14 times, with 18 agents with the configurations shown in \autoref{tab:exp_config}. All computer machines were in the same configuration: an Intel i7 processor with 12 threads, 32 GB of RAM, and 1TB of HD. The operating system was a RocksCluster distribution\footnote{http://www.rocksclusters.org/}. 
+
+\begin{table*}
+\centering
+\caption{Meta-heuristics configurations for the scalability experiment.}
+
+\begin{tabular}{lllc}
+    \toprule
+    \textbf{\# of agents}  & \textbf{Meta-heuristic}   & \textbf{Parameter}        & \textbf{Value} \\
+    \midrule
+    \multirow{2}{*}{6}      & \multirow{2}{*}{GRASP}    & iterations                 & 100\\
+                            &                           & local search iterations    & 100\\
+                            &                           & alpha                      & 0.5\\
+    \midrule
+    \multirow{2}{*}{3}      & \multirow{2}{*}{ILS}      & iterations                 & 500\\
+                            &                           & disturb level              & 10\\
+    \midrule
+    \multirow{2}{*}{3}      & \multirow{2}{*}{ILS}      & iterations                 & 500\\
+                            &                           & disturb level              & 7\\
+    \midrule
+    \multirow{4}{*}{3}      & \multirow{4}{*}{GA}       & iterations                & 300\\
+                            &                           & population size           & 20\\
+                            &                           & mutation rate             & 0.2\\
+                            &                           & crossover rate            & 0.7\\
+    \midrule
+    \multirow{4}{*}{3}      & \multirow{4}{*}{GA}       & iterations                & 500\\
+                            &                           & population size           & 30\\
+                            &                           & mutation rate             & 0.1\\
+                            &                           & crossover rate            & 0.8\\
+    \bottomrule
+\end{tabular}
+\label{tab:exp_config}
+\end{table*}
+
+Beyond the configuration shown in \autoref{tab:exp_config}, the number of regions was limited to 100, with a minimum of 30 solutions for one to split. The simulation duration was limited to 1000 units of time. The system registered the latency for four of the principal exchanged messages: the \textbf{UpdateGlobalSummary} which is frequently sent by the simulation leads to all regions, \textbf{UpdateRegionSummary} sent every time a new solution is produced or when a region split occurs, \textbf{RegionSplit} sent when a region is split into three, and finally, \textbf{SolutionResponse} sent to agents by the regions when answering a solution request. 
+
+% explain the conditions of the data extractions and robustness of ANOVA citing \cite{blanca2017}
+
+\autoref{fig:update_global_summary_boxplot} is the boxplot of the \textbf{UpdateGlobalSummary} latencies. We can see that \texttt{S3} differs from \texttt{S6}. But since the boxes for \texttt{S4} and \texttt{S5} are superimposed, we have to run a hypothesis test to see if the factor of the number of nodes in the simulation cluster degrades the performance. When checking the ANOVA assumptions, since only the normality of the residuals is not satisfied, we can still use the parametric test on the ensemble. The hypothesis test indicates with a \textit{p-value} of $0.000000$ that at least one experiment is different from the others.
+
+\begin{figure}[ht!]
+    \centering
+    \includesvg[scale=0.75]{figures/update_global_summary.svg}
+    \caption{Boxplot of the average of latencies for \textbf{UpdateGlobalSummary} for 14 trials of \texttt{d-optimas} architecture, with 1000 units of discrete time, over 3, 4, 5 and 6 computer nodes}
+    \label{fig:update_global_summary_boxplot}
+\end{figure}
+
+The Tukey-HSD test shows that \texttt{S3} is not different from \texttt{S4} and \texttt{S4} is not different from \texttt{S5}. Complete results with p-values are shown in \autoref{tab:update_global_summary_tukey}.
+
+\begin{table}[ht!]
+    \centering
+    \caption{Paired comparison (Tukey-HSD test) for average latencies of \textbf{UpdateGlobalSummary} messages}
+    \begin{tabular}{cccc}
+    \toprule
+    \multicolumn{2}{c}{\textbf{Instance}} & \textbf{p-value} & \textbf{Rejects $H_0$?}\\
+    \midrule
+    S3   &  S4  & 0.0938 &  No \\
+    S3   &  S5  & 0.0451 &  Yes \\
+    S3   &  S6  &  0.001 &  Yes \\
+    S4   &  S5  &    0.9 &  No \\
+    S4   &  S6  &  0.001 &  Yes \\
+    S5   &  S6  &  0.001 &  Yes \\
+    \bottomrule
+    \end{tabular}
+    \label{tab:update_global_summary_tukey}
+\end{table}
+
+Looking at the boxplot for the \textbf{UpdateGlobalSummary} message in \autoref{fig:update_region_summary_boxplot}, it is impossible to draw any conclusions once all the boxes are superimposed. Both homoscedasticity (p-value of $0.004774$) and normality of residuals (p-value of $0.000121$) are not met for this ensemble, which will require a nonparametric test. Kruskall-Wallis rejects the null hypothesis with a p-value of $0.002919$, indicating that at least one instance differs from the others. 
+
+\begin{figure}[ht!]
+    \centering
+    \includesvg[scale=0.75]{figures/update_region_summary.svg}
+    \caption{Boxplot of the average of latencies for \textbf{UpdateRegionSummary} for 14 trials of \texttt{d-optimas} architecture, with 1000 units of discrete time, over 3, 4, 5, and 6 computer nodes}
+    \label{fig:update_region_summary_boxplot}
+\end{figure}
+
+The nonparametric \textit{post hoc} test of Conover-Iman was used to find which instance is different from the others; the detailed results are shown in \autoref{tab:update_region_summary}. The \texttt{S3} is different from \texttt{S5} and \texttt{S6}, and \texttt{S4} is different from \texttt{S6}.
+
+\begin{table}[ht!]
+    \centering
+    \caption{Paired comparison (Conover's test) for average latencies of \textbf{UpdateRegionSummary} messages}
+    \begin{tabular}{cccc}
+    \toprule
+    \multicolumn{2}{c}{\textbf{Instances}} & \textbf{p-value} & \textbf{Rejects $H_0$?}\\
+    \midrule
+     S3 &    S4 &  0.06021 &  No  \\
+     S3 &    S5 &  0.00378 &  Yes \\
+     S3 &    S6 &  0.00017 &  Yes \\
+     S4 &    S5 &  0.27176 &  No  \\
+     S4 &    S6 &  0.03905 &  Yes \\
+     S5 &    S6 &  0.31895 &  No  \\
+     \bottomrule
+    \end{tabular}
+    \label{tab:update_region_summary}
+\end{table}
+
+For the \textbf{RegionSplit} message shown in \autoref{fig:region_split_boxplot}, it is also impossible to draw any conclusion. It was impossible to check all the assumptions for ANOVA since the ensemble is not homoscedastic, nor do the residuals follow a normal distribution with p-values of $0.002790$ and $0.000005$, respectively. The Kruskal-Wallis test indicates that at least one of the instances is different from the others with a p-value of $0.002748$.
+
+\begin{figure}[ht!]
+    \centering
+    \includesvg[scale=0.75]{figures/region_split.svg}
+    \caption{Boxplot of the average of latencies for \textbf{RegionSplit} for 14 trials of \texttt{d-optimas} architecture, with 1000 units of discrete time, over 3, 4, 5, and 6 computer nodes}
+    \label{fig:region_split_boxplot}
+\end{figure}
+
+The Conover-Iman test shows that \texttt{S3} is different from \texttt{S5} and \texttt{S6}, as well as \texttt{S4} is different from \texttt{S6}. There is no difference for the other pairs of comparison, as shown in \autoref{tab:region_split}.
+
+\begin{table}[ht!]
+    \centering
+    \caption{Paired comparison (Conover's test) for average latencies of 
+ \textbf{RegionSplit} messages}
+    \begin{tabular}{cccc}
+    \toprule
+    \multicolumn{2}{c}{\textbf{Instances}} & \textbf{p-value} & \textbf{Rejects $H_0$?}\\
+    \midrule
+       S3  &  S4  &  0.06021  &  No \\
+       S3  &  S5  &  0.00378  &  Yes \\
+       S3  &  S6  &  0.00017  &  Yes \\
+       S4  &  S5  &  0.27176  &  No \\
+       S4  &  S6  &  0.03905  &  Yes \\
+       S5  &  S6  &  0.31895  &  No \\
+     \bottomrule
+    \end{tabular}
+    \label{tab:region_split}
+\end{table}
+
+
+Finally, the averages of the latencies for \textbf{SolutionResponse} are shown in \autoref{fig:solution_response_boxplot}. It is possible to visually distinguish the \texttt{S3} instance from the other one since they do not superimpose. The observations are independent and homoscedastic with a p-value of $ 0.060870$. The Shapiro-Wilk test indicates that the residuals are not normally distributed, with a p-value of $0.001216$, which allows for the use of ANOVA for the other three instances. The test confirms a difference between instances with a p-value of $0.000000$.
+
+\begin{figure}[ht!]
+    \centering
+    \includesvg[scale=0.75]{figures/solution_response.svg}
+    \caption{Boxplot of the average of latencies for \textbf{SolutionResponse} for 14 trials of \texttt{d-optimas} architecture, with 1000 units of discrete time, over 3, 4, 5, and 6 computer nodes}
+    \label{fig:solution_response_boxplot}
+\end{figure}
+
+The Tukey-HSD test shown in \autoref{tab:solution_response} indicates that the difference between instances \texttt{S4} and \texttt{S5}, and \texttt{S5} and \texttt{S6} is not noticeable. 
+
+\begin{table}[ht!]
+    \centering
+    \caption{Paired comparison (Tukey-HSD test) for average latencies of \textbf{SolutionResponse} messages}
+    \begin{tabular}{cccc}
+    \toprule
+    \multicolumn{2}{c}{\textbf{Instances}} & \textbf{p-value} & \textbf{Rejects $H_0$?}\\
+    \midrule
+    S3  &  S4 & 0.001   & Yes  \\
+    S3  &  S5 & 0.001   & Yes  \\
+    S3  &  S6 & 0.001   & Yes  \\
+    S4  &  S5 &  0.0862 & No \\
+    S4  &  S6 &   0.004 & Yes  \\
+    S5  &  S6 &  0.6325 & No \\
+     \bottomrule
+    \end{tabular}
+    \label{tab:solution_response}
+\end{table}
+
+The statistical results of the data collected from the experiment make it worthwhile to reflect on increasing the size of the cluster effects. While we kept the number of agents and the limit of regions, we offered more computational resources to the architecture, i.e., the presence of more processing cores, memory, and bandwidth favors load balancing. By better distributing the load among the processing nodes, it is natural that the scaling between the actors, the waiting time for I/O, and the memory paging decrease, making each execution of the actor more efficient.
+
+However, the results show that there is indeed a downward trend in average latency as the number of nodes increases, especially when more than one node is added to the simulation. In other words, actors are faster at processing the messages they receive. This trend indicates that the architecture was built to take advantage of its available resources.
+
+Among the four types of messages analyzed in this experiment, it is possible to observe a difference in order of magnitude and variance when comparing the messages received by the leader and those handled by other entities in the simulation. This phenomenon may reflect a concentration of tasks on the leader. Even if they do not have a high computational complexity (most of them have $\mathcal{O}(n)$ asymptotic complexity, where n is the number of agents and regions in the simulation), there may be a delay in answering the messages that accumulate quickly. Even so, it is possible to observe that the leader also benefits from increased computational resources, decreasing the average latency.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+This paper introduced \textt{d-optimas}, a distributed multiagent system based on the actor model designed to solve various optimization problems. The algorithms are generic with respect to the problem and solution representation. There are implementations for the most relevant optimization algorithms in the literature, such as simulated annealing, differential evolution, particle swarm optimization, and genetic algorithm. Metaheuristics are extensible regarding their internal operations through the solution modifiers. The architecture provides more generic implementations for those modifiers, and more specific implementations related to a particular problem can be provided.
+
+The proposed architecture was evaluated through an experiment to assess its scalability in a small computer cluster. We compared the latency of message exchange between different cluster sizes, maintaining the configuration for simulation. The data obtained showed that the latency of the main message types exchanged between actors tends to decrease under the same design. 
+
+For future work, \texttt{d-optimas} will be extended to handle multiobjective problems. To achieve that, new algorithms and issues need to be added. The architecture should also be subjected to a benchmark, such as CoCO (Comparing Continuous Optimizers library)\cite{hansen2021}. This imposes a particular challenge once CoCO was designed to compare algorithm implementations, not complex distributed architectures.
+
+ \bibliographystyle{elsarticle-num} 
+ \bibliography{cas-refs}
+
+\end{document}
+\endinput
+%%
+%% End of file `elsarticle-template-num.tex'.
